@@ -15,7 +15,7 @@ export default function Modal({ onClose = () => {}, children }) {
         }}
         className="absolute inset-0 z-40"
       />
-      <div className="bg-white shadow-lg w-5/6 h-[85vh] rounded-lg z-50">{children}</div>
+      <div className="bg-white shadow-lg lg:w-5/6 w-11/12 h-[85vh] rounded-lg z-50 lg:overflow-hidden overflow-scroll">{children}</div>
     </div>
   );
 }

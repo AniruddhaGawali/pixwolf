@@ -12,6 +12,7 @@ import Model from '@/components/model';
 import Card from '@/components/card';
 
 import { IoIosCloseCircleOutline } from 'react-icons/io';
+import { FaShare } from 'react-icons/fa';
 
 const Search = () => {
   const client = usePexelClient();
@@ -129,6 +130,7 @@ const Search = () => {
 export default Search;
 
 export const ModelBox = ({ item, setOpenModel }) => {
+  const router = useRouter();
   const [type, setType] = useState('small');
 
   const download = () => {
@@ -144,30 +146,39 @@ export const ModelBox = ({ item, setOpenModel }) => {
   };
 
   return (
-    <div className="rounded-lg">
+    <div className="rounded-lg lg:overflow-hidden overflow-scroll">
       <div className="flex flex-row justify-between items-center w-full h-full bg-gray-300 px-5 rounded-t-lg">
-        <h2 className="text-black text-2xl font-bold  text-center  p-5 rounded-t-lg">
+        <h2 className="text-black sm:text-2xl text-xl whitespace-nowrap font-bold  text-center p-5 rounded-t-lg">
           Preview Id : {item.id}
         </h2>
 
-        <div>
+        <div className="flex justify-center items-center gap-5">
+          <FaShare
+            className="text-black sm:text-4xl text-2xl font-bold cursor-pointer"
+            onClick={() => {
+              navigator.clipboard.writeText(
+                'http://localhost:3000/' + '/image/?id=' + item.id
+              );
+            }}
+          />
+
           <IoIosCloseCircleOutline
-            className="text-black text-5xl font-bold cursor-pointer"
+            className="text-black sm:text-5xl text-3xl font-bold cursor-pointer"
             onClick={() => {
               setOpenModel(false);
             }}
           />
         </div>
       </div>
-      <div className="flex flex-row justify-center items-center w-full h-[75vh]">
-        <div className="w-1/2 p-5 h-full">
+      <div className="flex lg:flex-row flex-col lg:overflow-hidden overflow-scroll justify-center items-center w-full lg:h-[75vh] ">
+        <div className="lg:w-1/2 w-full p-5 lg:h-full">
           <img
             src={item.src.large2x}
             alt={item.alt}
-            className="object-cover w-full h-full rounded-lg shadow-lg-inner shadow-white"
+            className="object-cover w-full lg:h-full h-[50vh] rounded-lg shadow-lg-inner shadow-white"
           />
         </div>
-        <div className=" flex flex-col justify-center items-center w-1/2 p-5">
+        <div className=" flex flex-col justify-center items-center lg:w-1/2 w-full p-5 ">
           <div className="flex flex-col justify-start items-start gap-5 m-5 bg-gray-300 p-5 rounded-lg w-full">
             <h2 className="text-black text-2xl font-bold mb-3">
               Download Size
@@ -240,14 +251,14 @@ export const ModelBox = ({ item, setOpenModel }) => {
             Download
           </button>
 
-          <div className="flex flex-col justify-start items-start gap-2 mt-3 p-5 rounded-lg w-full">
+          <div className="flex flex-col justify-start items-start gap-2 mt-3 sm:p-5 p-2 rounded-lg w-full ">
             <h2 className="text-black text-2xl font-bold mb-2">Information</h2>
             <div className="flex justify-start items-start gap-5">
-              <h3 className="text-black text-lg font-semibold ">Title :</h3>
+              <h3 className="text-black text-lg font-semibold whitespace-nowra">Title :</h3>
               <h3 className="text-black text-lg font-semibold ">{item.alt}</h3>
             </div>
             <div className="flex justify-start items-start gap-5">
-              <h3 className="text-black text-lg font-semibold">
+              <h3 className="text-black text-lg font-semibold whitespace-nowrap">
                 Photographer :
               </h3>
               <h3 className="text-black text-lg font-semibold ">
@@ -255,24 +266,16 @@ export const ModelBox = ({ item, setOpenModel }) => {
               </h3>
             </div>
             <div className="flex justify-start items-start gap-5">
-              <h3 className="text-black text-lg font-semibold ">Id :</h3>
+              <h3 className="text-black text-lg font-semibold whitespace-nowra">Id :</h3>
               <h3 className="text-black text-lg font-semibold ">{item.id}</h3>
             </div>
             <div className="flex justify-start items-start gap-5">
-              <h3 className="text-black text-lg font-semibold ">Avg Color :</h3>
+              <h3 className="text-black text-lg font-semibold whitespace-nowra">Avg Color :</h3>
               <h3 className="text-black text-lg font-semibold ">
                 {item.avg_color}
               </h3>
             </div>
-            <div className="flex justify-start items-start gap-5">
-              <h3 className="text-black text-lg font-semibold ">URL :</h3>
-              <h3 className="text-black text-lg font-semibold ">
-                <a href={item.url}>{item.url}</a>
-              </h3>
-            </div>
           </div>
-
-          {/* Add other context elements here */}
         </div>
       </div>
     </div>
