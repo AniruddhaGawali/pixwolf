@@ -1,11 +1,15 @@
-import React from 'react'
+'use client';
 
-export const BorderButton = () => {
+import React from 'react';
+
+export const BorderButton = ({ text, onClick, className }) => {
   return (
-    <button className="border-2 border-white rounded-full px-6 py-2 text-white font-semibold hover:bg-white hover:text-black transition duration-300 ease-in-out">
-        Get Started
+    <button
+      onClick={onClick ? onClick : () => {}}
+      className={`border-[3px] border-white rounded-lg px-4 py-1 text-white font-bold hover:bg-white hover:text-black transition duration-300 ease-in-out ${
+        className ? className : ''
+      }`}>
+      {text ? text : 'Button'}
     </button>
-  )
-}
-
- 
+  );
+};
