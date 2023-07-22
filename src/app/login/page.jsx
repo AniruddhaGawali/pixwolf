@@ -76,7 +76,6 @@ const handleSignUp = async (email, password, fullName) => {
         },
       },
     });
-    console.log(data, error);
     if (data.user) {
       toast.info('Check your email for confirmation!', {
         position: 'top-right',

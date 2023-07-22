@@ -8,7 +8,6 @@ export default function Modal({ onClose = () => {}, children }) {
       <div
         ref={overlayRef}
         onClick={(e) => {
-            console.log(e.target , overlayRef.current)
           if (e.target === overlayRef.current) {
             onClose();
           }

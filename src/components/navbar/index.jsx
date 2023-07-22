@@ -12,8 +12,6 @@ import { UserContext } from '@/app/layout';
 const Navbar = () => {
   const { user, setUser } = useContext(UserContext);
 
-  console.log(user);
-
   return (
     <div className=" flex justify-between items-center w-11/12 bg-white bg-opacity-20 backdrop-blur-lg rounded-lg shadow-lg-inner shadow-white sm:px-14 px-5 py-4 mt-12">
       <div className="flex items-center space-x-4 ">
@@ -24,8 +22,8 @@ const Navbar = () => {
       <div className="flex gap-5 items-center space-x-4">
         {user != null ? (
           <>
-            <div className='flex items-center justify-center gap-3'>
-              <FaUserCircle className=" text-white text-3xl font-semibold hover:text-gray-200"/>
+            <div className="flex items-center justify-center gap-3">
+              <FaUserCircle className=" text-white text-3xl font-semibold hover:text-gray-200" />
               <div className=" text-white text-lg font-semibold hover:text-gray-200">
                 {user.user_metadata.full_name}
               </div>
