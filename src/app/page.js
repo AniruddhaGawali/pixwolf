@@ -1,35 +1,52 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import Navbar from '@/components/navbar';
-import SearchBar from '@/components/searchbar';
+import { useEffect, useState, useContext } from 'react';
+import { useRouter } from 'next/navigation';
 import usePexelClient from '@/hook/usePexelClient';
 
+import Navbar from '@/components/navbar';
+import SearchBar from '@/components/searchbar';
+import Loading from '@/components/loading';
+
+import { BgContext, SearchContext } from '@/app/layout';
+
 export default function Home() {
+  const router = useRouter();
   const clinet = usePexelClient();
   const query = [
     'nature',
     'flower',
     'forest',
-    'animal',
     'sky',
     'mountain',
     'beach',
     'city',
     'space',
   ];
+
+  const { bgImg, setBgImg } = useContext(BgContext);
+  const { setSearchQuery } = useContext(SearchContext);
+
   const random = Math.floor(Math.random() * query.length);
-  const [bgImg, setBgImg] = useState('');
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
     clinet.photos
       .search({ query: query[random], per_page: 1 })
       .then((photos) => {
         setBgImg(photos.photos[0].src.original);
+        setLoading(false);
       });
   }, []);
 
+  const treadSearch = (search) => {
+    setSearchQuery(search);
+    router.push('/search');
+  };
+
   return (
     <main className="relative flex  min-h-screen flex-col items-center justify-center">
+      {loading && <Loading />}
       <img
         src={bgImg}
         alt="bg"
@@ -42,7 +59,11 @@ export default function Home() {
           <br />
           free Stock Images
         </h1>
-        <SearchBar />
+        <SearchBar
+          searchFunction={() => {
+            router.push('/search');
+          }}
+        />
         <div
           className="
         flex items-center justify-center shadow-lg-inner shadow-white rounded-lg
@@ -51,16 +72,32 @@ export default function Home() {
         ">
           <span className="font-semibold">Trending: </span>
 
-          <a href="" className="hover:underline">
+          <a
+            onClick={() => {
+              treadSearch('flower');
+            }}
+            className="hover:underline cursor-pointer">
             flowers,
           </a>
-          <a href="" className="hover:underline">
+          <a
+          onClick={() => {
+            treadSearch('love');
+          }}
+          className="hover:underline cursor-pointer">
             love,
           </a>
-          <a href="" className="hover:underline">
+          <a 
+          onClick={() => {
+            treadSearch('forest');
+          }}
+          className="ho ver:underline cursor-pointer">
             forest,
           </a>
-          <a href="" className="hover:underline">
+          <a
+          onClick={() => {
+            treadSearch('river');
+          }}
+            className="hover:underline cursor-pointer">
             river
           </a>
         </div>
