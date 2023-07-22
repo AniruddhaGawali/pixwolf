@@ -1,6 +1,8 @@
 'use client';
 import React, { useEffect, useState } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import usePexelClient from '@/hook/usePexelClient';
 
@@ -123,6 +125,7 @@ const Search = () => {
           </Model>
         </div>
       )}
+      <ToastContainer />
     </div>
   );
 };
@@ -159,6 +162,16 @@ export const ModelBox = ({ item, setOpenModel }) => {
               navigator.clipboard.writeText(
                 'http://localhost:3000/' + '/image/?id=' + item.id
               );
+              toast.success('Link Copied', {
+                position: 'top-right',
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: 'light',
+              });
             }}
           />
 
@@ -254,7 +267,9 @@ export const ModelBox = ({ item, setOpenModel }) => {
           <div className="flex flex-col justify-start items-start gap-2 mt-3 sm:p-5 p-2 rounded-lg w-full ">
             <h2 className="text-black text-2xl font-bold mb-2">Information</h2>
             <div className="flex justify-start items-start gap-5">
-              <h3 className="text-black text-lg font-semibold whitespace-nowra">Title :</h3>
+              <h3 className="text-black text-lg font-semibold whitespace-nowra">
+                Title :
+              </h3>
               <h3 className="text-black text-lg font-semibold ">{item.alt}</h3>
             </div>
             <div className="flex justify-start items-start gap-5">
@@ -266,11 +281,15 @@ export const ModelBox = ({ item, setOpenModel }) => {
               </h3>
             </div>
             <div className="flex justify-start items-start gap-5">
-              <h3 className="text-black text-lg font-semibold whitespace-nowra">Id :</h3>
+              <h3 className="text-black text-lg font-semibold whitespace-nowra">
+                Id :
+              </h3>
               <h3 className="text-black text-lg font-semibold ">{item.id}</h3>
             </div>
             <div className="flex justify-start items-start gap-5">
-              <h3 className="text-black text-lg font-semibold whitespace-nowra">Avg Color :</h3>
+              <h3 className="text-black text-lg font-semibold whitespace-nowra">
+                Avg Color :
+              </h3>
               <h3 className="text-black text-lg font-semibold ">
                 {item.avg_color}
               </h3>
