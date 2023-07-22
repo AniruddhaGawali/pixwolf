@@ -12,6 +12,7 @@
     "@supabase/supabase-js": "^2.26.0",
     "autoprefixer": "10.4.14",
     "file-saver": "^2.0.5",
+    "framer-motion": "^10.13.0",
     "next": "13.4.12",
     "pexels": "^1.4.0",
     "postcss": "8.4.27",

@@ -4,9 +4,12 @@ import { useEffect, useState, useContext } from 'react';
 import { useRouter } from 'next/navigation';
 import usePexelClient from '@/hook/usePexelClient';
 
+import { motion } from 'framer-motion';
+
 import Navbar from '@/components/navbar';
 import SearchBar from '@/components/searchbar';
 import Loading from '@/components/loading';
+
 export default function Home() {
   const router = useRouter();
   const clinet = usePexelClient();
@@ -39,7 +42,19 @@ export default function Home() {
   };
 
   return (
-    <main className="relative flex  min-h-screen flex-col items-center justify-center">
+    <motion.main
+      initial={{
+        opacity: 0,
+       
+      }}
+      animate={{
+        opacity: 1,
+      }}
+      exit={{
+        opacity: 0,
+      }}
+      transition={{ duration: 1 }}
+      className="relative flex  min-h-screen flex-col items-center justify-center">
       {loading && <Loading />}
       <img
         src={bgImg}
@@ -74,28 +89,28 @@ export default function Home() {
             flowers,
           </a>
           <a
-          onClick={() => {
-            treadSearch('love');
-          }}
-          className="hover:underline cursor-pointer">
+            onClick={() => {
+              treadSearch('love');
+            }}
+            className="hover:underline cursor-pointer">
             love,
           </a>
-          <a 
-          onClick={() => {
-            treadSearch('forest');
-          }}
-          className="ho ver:underline cursor-pointer">
+          <a
+            onClick={() => {
+              treadSearch('forest');
+            }}
+            className="ho ver:underline cursor-pointer">
             forest,
           </a>
           <a
-          onClick={() => {
-            treadSearch('river');
-          }}
+            onClick={() => {
+              treadSearch('river');
+            }}
             className="hover:underline cursor-pointer">
             river
           </a>
         </div>
       </div>
-    </main>
+    </motion.main>
   );
 }

@@ -10,11 +10,12 @@ import Navbar from '@/components/navbar';
 import SearchBar from '@/components/searchbar';
 import Loading from '@/components/loading';
 import Model from '@/components/model';
-
 import Card from '@/components/card';
 
 import { IoIosCloseCircleOutline } from 'react-icons/io';
 import { FaShare } from 'react-icons/fa';
+
+import { motion } from 'framer-motion';
 
 const Search = () => {
   const client = usePexelClient();
@@ -70,7 +71,18 @@ const Search = () => {
   ];
 
   return (
-    <div className=" flex flex-col justify-center items-center w-full">
+    <motion.div
+      initial={{
+        opacity: 0,
+      }}
+      animate={{
+        opacity: 1,
+      }}
+      exit={{
+        opacity: 0,
+      }}
+      transition={{ duration: 1 }}
+      className=" flex flex-col justify-center items-center w-full">
       <div className=" relative flex flex-col justify-start items-center sm:h-[55vh] h-[47vh] w-full">
         <img
           src={bgImg}
@@ -126,7 +138,7 @@ const Search = () => {
         </div>
       )}
       <ToastContainer />
-    </div>
+    </motion.div>
   );
 };
 

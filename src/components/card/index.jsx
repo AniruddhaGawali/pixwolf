@@ -5,13 +5,12 @@ import { FiDownload } from 'react-icons/fi';
 
 const Card = ({ item, tags, router, setIndex }) => {
   return (
-    <div
-      className=" group relative flex flex-col justify-end items-start p-5 h-[50vh]"
-      onClick={setIndex}>
+    <div className=" group relative flex flex-col justify-end items-start p-5 h-[50vh]">
       <img
         src={item.src.large}
         alt={item.alt}
         class=" absolute top-0 left-0 object-cover rounded-lg shadow-lg-inner w-full h-full"
+        onClick={setIndex}
       />
       <div className=" flex justify-between items-end w-full z-10">
         <div>

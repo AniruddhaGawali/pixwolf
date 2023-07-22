@@ -1,9 +1,13 @@
 'use client';
 import React, { useEffect, useState } from 'react';
-import { useSearchParams,useRouter } from 'next/navigation';
-import { ModelBox } from '../search/page';
+import { useSearchParams, useRouter } from 'next/navigation';
+
 import usePexelClient from '@/hook/usePexelClient';
+
+import { ModelBox } from '../search/page';
 import Loading from '../loading';
+
+import { motion } from 'framer-motion';
 
 const Image = () => {
   const searchParams = useSearchParams();
@@ -29,9 +33,19 @@ const Image = () => {
   }
 
   return (
-    <div>
-      <ModelBox item={result} setOpenModel={()=> client.push('/')} />
-    </div>
+    <motion.div
+      initial={{
+        opacity: 0,
+      }}
+      animate={{
+        opacity: 1,
+      }}
+      exit={{
+        opacity: 0,
+      }}
+      transition={{ duration: 1 }}>
+      <ModelBox item={result} setOpenModel={() => client.push('/')} />
+    </motion.div>
   );
 };
 

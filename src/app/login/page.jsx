@@ -1,23 +1,24 @@
 'use client';
+import 'react-toastify/dist/ReactToastify.css';
 
 import { useSearchParams, useRouter } from 'next/navigation';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
+import Link from 'next/link';
 
 import usePexelClient from '@/hook/usePexelClient';
 import { createClient } from '@supabase/supabase-js';
 import { BorderButton } from '@/components/button';
 
 import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import Link from 'next/link';
+
+import { UserContext } from '@/app/layout';
+
+import { motion } from 'framer-motion';
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL,
   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
 );
-
-import { useContext } from 'react';
-import { UserContext } from '@/app/layout';
 
 const handleSignIn = async (email, password, setUser, router) => {
   try {
@@ -143,7 +144,18 @@ export default function Login() {
 
   return (
     <>
-      <div className="relative min-h-screen flex items-center justify-center bg-gray-100">
+      <motion.div
+        initial={{
+          opacity: 0,
+        }}
+        animate={{
+          opacity: 1,
+        }}
+        exit={{
+          opacity: 0,
+        }}
+        transition={{ duration: 1 }}
+        className="relative min-h-screen flex items-center justify-center bg-gray-100">
         <img
           src={bgImg}
           alt=""
@@ -163,7 +175,7 @@ export default function Login() {
             <Signin setIsSignUp={setIsSignUp} />
           )}
         </div>
-      </div>
+      </motion.div>
       <ToastContainer />
     </>
   );
