@@ -18,7 +18,7 @@ const Card = ({ item, tags, router, setIndex }) => {
           <div className=" mt-3 flex text-white text-sm font-semibold">
             {tags.map((tag) => (
               <span
-                className="bg-white bg-opacity-20 backdrop-blur-lg rounded-lg cur shadow-lg-inner shadow-white px-2 py-1 mr-3"
+                className="bg-white bg-opacity-20 backdrop-blur-lg rounded-lg cur shadow-lg-inner shadow-white px-2 py-1 mr-3 cursor-pointer"
                 onClick={() => {
                   router.push(`/search/?search=${tag}`);
                 }}>
