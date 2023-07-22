@@ -1,5 +1,6 @@
 'use client';
 import React, { useEffect, useState, useContext } from 'react';
+import { useSearchParams, useRouter } from 'next/navigation';
 
 import usePexelClient from '@/hook/usePexelClient';
 
@@ -7,22 +8,18 @@ import Navbar from '@/components/navbar';
 import SearchBar from '@/components/searchbar';
 import Loading from '@/components/loading';
 
-import { BgContext, SearchContext } from '@/app/layout';
+import { BgContext } from '@/app/layout';
 import Card from '@/components/card';
-
 
 const Search = () => {
   const client = usePexelClient();
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const searchQuery = searchParams.get('search');
 
   const { bgImg } = useContext(BgContext);
-  const { searchQuery, setSearchQuery } = useContext(SearchContext);
   const [searchResult, setSearchResult] = useState([]);
   const [loading, setLoading] = useState(true);
-
-  const search = async (search) => {
-    setSearchQuery(search);
-    await fetchSearch();
-  };
 
   const fetchSearch = async () => {
     setLoading(true);
@@ -37,7 +34,7 @@ const Search = () => {
 
   useEffect(() => {
     fetchSearch();
-  }, []);
+  }, [searchQuery]);
 
   const tags = [
     'nature',
@@ -95,7 +92,7 @@ const Search = () => {
                 tags[Math.floor(Math.random() * (tags.length - 1 - 0 + 1))],
                 tags[Math.floor(Math.random() * (tags.length - 1 - 0 + 1))],
               ]}
-              search={search}
+              router={router}
             />
           ))
         )}

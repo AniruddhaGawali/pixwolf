@@ -8,7 +8,7 @@ import Navbar from '@/components/navbar';
 import SearchBar from '@/components/searchbar';
 import Loading from '@/components/loading';
 
-import { BgContext, SearchContext } from '@/app/layout';
+import { BgContext } from '@/app/layout';
 
 export default function Home() {
   const router = useRouter();
@@ -25,7 +25,6 @@ export default function Home() {
   ];
 
   const { bgImg, setBgImg } = useContext(BgContext);
-  const { setSearchQuery } = useContext(SearchContext);
 
   const random = Math.floor(Math.random() * query.length);
   const [loading, setLoading] = useState(true);
@@ -40,8 +39,7 @@ export default function Home() {
   }, []);
 
   const treadSearch = (search) => {
-    setSearchQuery(search);
-    router.push('/search');
+    router.push(`/search/?search=${search}`);
   };
 
   return (
