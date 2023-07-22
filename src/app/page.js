@@ -54,7 +54,7 @@ export default function Home() {
       />
       <div className=" absolute top-0 left-0 w-full h-full flex flex-col justify-start items-center ">
         <Navbar />
-        <h1 className="text-7xl text-white font-extrabold text-center mt-20 leading-snug">
+        <h1 className="lg:text-7xl sm:text-5xl text-3xl text-white font-extrabold text-center mt-20 leading-snug">
           Discover over 2,000,000
           <br />
           free Stock Images
@@ -68,7 +68,7 @@ export default function Home() {
           className="
         flex items-center justify-center shadow-lg-inner shadow-white rounded-lg
         bg-white bg-opacity-20 backdrop-blur-lg px-7 py-2 mt-12
-        text-white text-lg gap-2
+        text-white sm:text-lg text-xs gap-2
         ">
           <span className="font-semibold">Trending: </span>
 

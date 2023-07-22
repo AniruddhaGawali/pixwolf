@@ -10,6 +10,7 @@ import Loading from '@/components/loading';
 import { BgContext, SearchContext } from '@/app/layout';
 import Card from '@/components/card';
 
+
 const Search = () => {
   const client = usePexelClient();
 
@@ -59,7 +60,7 @@ const Search = () => {
 
   return (
     <div className=" flex flex-col justify-center items-center w-full">
-      <div className=" relative flex flex-col justify-start items-center h-[55vh] w-full">
+      <div className=" relative flex flex-col justify-start items-center sm:h-[55vh] h-[47vh] w-full">
         <img
           src={bgImg}
           alt="bg"
@@ -77,11 +78,11 @@ const Search = () => {
         <br />
         <br />
 
-        <h2 className="z-20 text-white text-6xl font-bold">
+        <h2 className="z-20 text-white lg:text-7xl sm:text-5xl text-3xl font-bold">
           Result: {searchQuery}
         </h2>
       </div>
-      <div class="grid grid-cols-2 md:grid-cols-3 gap-16 p-10 w-full">
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 xl:gap-16 gap-5 p-10 w-full">
         {/* <div className="flex flex-row flex-wrap justify-center items-center w-full h-full gap-5"> */}
         {loading ? (
           <Loading />
