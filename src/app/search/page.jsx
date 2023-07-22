@@ -172,7 +172,7 @@ export const ModelBox = ({ item, setOpenModel }) => {
             className="text-black sm:text-4xl text-2xl font-bold cursor-pointer"
             onClick={() => {
               navigator.clipboard.writeText(
-                'http://localhost:3000/' + '/image/?id=' + item.id
+                'https://pixwolf.vercel.app/' + '/image/?id=' + item.id
               );
               toast.success('Link Copied', {
                 position: 'top-right',
