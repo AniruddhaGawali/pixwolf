@@ -24,7 +24,7 @@ const Navbar = () => {
           <>
             <div className="flex items-center justify-center gap-3">
               <FaUserCircle className=" text-white text-3xl font-semibold hover:text-gray-200" />
-              <div className=" text-white text-lg font-semibold hover:text-gray-200">
+              <div className="sm:block hidden text-white text-lg font-semibold hover:text-gray-200">
                 {user.user_metadata.full_name}
               </div>
             </div>
