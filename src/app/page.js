@@ -7,9 +7,6 @@ import usePexelClient from '@/hook/usePexelClient';
 import Navbar from '@/components/navbar';
 import SearchBar from '@/components/searchbar';
 import Loading from '@/components/loading';
-
-import { BgContext } from '@/app/layout';
-
 export default function Home() {
   const router = useRouter();
   const clinet = usePexelClient();
@@ -24,10 +21,9 @@ export default function Home() {
     'space',
   ];
 
-  const { bgImg, setBgImg } = useContext(BgContext);
-
   const random = Math.floor(Math.random() * query.length);
   const [loading, setLoading] = useState(true);
+  const [bgImg, setBgImg] = useState('');
 
   useEffect(() => {
     clinet.photos

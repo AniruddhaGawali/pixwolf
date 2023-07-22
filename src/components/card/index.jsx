@@ -3,9 +3,11 @@ import { useRouter } from 'next/router';
 import { saveAs } from 'file-saver';
 import { FiDownload } from 'react-icons/fi';
 
-const Card = ({ item, tags, router }) => {
+const Card = ({ item, tags, router, setIndex }) => {
   return (
-    <div className=" group relative flex flex-col justify-end items-start p-5 h-[50vh]  ">
+    <div
+      className=" group relative flex flex-col justify-end items-start p-5 h-[50vh]"
+      onClick={setIndex}>
       <img
         src={item.src.large}
         alt={item.alt}
@@ -28,7 +30,7 @@ const Card = ({ item, tags, router }) => {
         </div>
 
         <div
-          className="group-hover:flex hidden bg-white bg-opacity-20 backdrop-blur-lg rounded-lg shadow-lg-inner shadow-white px-3 py-3 mt-12 cursor-pointer"
+          className="group-hover:flex hidden bg-white bg-opacity-20 backdrop-blur-lg rounded-lg shadow-lg-inner shadow-white px-3 py-3 mt-12 cursor-pointer "
           onClick={() => {
             saveAs(item.src.original, `${item.alt}.png`);
           }}>

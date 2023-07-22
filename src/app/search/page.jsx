@@ -1,5 +1,5 @@
 'use client';
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 
 import usePexelClient from '@/hook/usePexelClient';
@@ -7,9 +7,11 @@ import usePexelClient from '@/hook/usePexelClient';
 import Navbar from '@/components/navbar';
 import SearchBar from '@/components/searchbar';
 import Loading from '@/components/loading';
+import Model from '@/components/model';
 
-import { BgContext } from '@/app/layout';
 import Card from '@/components/card';
+
+import { IoIosCloseCircleOutline } from 'react-icons/io';
 
 const Search = () => {
   const client = usePexelClient();
@@ -17,9 +19,14 @@ const Search = () => {
   const searchParams = useSearchParams();
   const searchQuery = searchParams.get('search');
 
-  const { bgImg } = useContext(BgContext);
   const [searchResult, setSearchResult] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [openModel, setOpenModel] = useState(false);
+  const [index, setIndex] = useState(0);
+
+  const [bgImg, setBgImg] = useState(
+    'https://images.pexels.com/photos/1179229/pexels-photo-1179229.jpeg?auto=compress&cs=tinysrgb&h=650&w=940'
+  );
 
   const fetchSearch = async () => {
     setLoading(true);
@@ -28,6 +35,10 @@ const Search = () => {
       per_page: 21,
     });
 
+    setBgImg(
+      data.photos[Math.floor(Math.random() * (data.photos.length - 1 - 0 + 1))]
+        .src.original
+    );
     setSearchResult(data.photos);
     setLoading(false);
   };
@@ -84,7 +95,7 @@ const Search = () => {
         {loading ? (
           <Loading />
         ) : (
-          searchResult.map((item) => (
+          searchResult.map((item, index) => (
             <Card
               item={item}
               tags={[
@@ -93,12 +104,177 @@ const Search = () => {
                 tags[Math.floor(Math.random() * (tags.length - 1 - 0 + 1))],
               ]}
               router={router}
+              setIndex={() => {
+                setIndex(index);
+                setOpenModel(true);
+              }}
             />
           ))
         )}
       </div>
+      {!loading && (
+        <div className={`${openModel ? 'flex z-50' : 'hidden'}`}>
+          <Model
+            onClose={() => {
+              setOpenModel(false);
+            }}>
+            <ModelBox item={searchResult[index]} setOpenModel={setOpenModel} />
+          </Model>
+        </div>
+      )}
     </div>
   );
 };
 
 export default Search;
+
+export const ModelBox = ({ item, setOpenModel }) => {
+  const [type, setType] = useState('small');
+
+  const download = () => {
+    if (type === 'original') {
+      saveAs(item.src.original, `${item.alt}.png`);
+    } else if (type === 'small') {
+      saveAs(item.src.small, `${item.alt}.png`);
+    } else if (type === 'large') {
+      saveAs(item.src.large, `${item.alt}.png`);
+    } else if (type === 'medium') {
+      saveAs(item.src.medium, `${item.alt}.png`);
+    }
+  };
+
+  return (
+    <div className="rounded-lg">
+      <div className="flex flex-row justify-between items-center w-full h-full bg-gray-300 px-5 rounded-t-lg">
+        <h2 className="text-black text-2xl font-bold  text-center  p-5 rounded-t-lg">
+          Preview Id : {item.id}
+        </h2>
+
+        <div>
+          <IoIosCloseCircleOutline
+            className="text-black text-5xl font-bold cursor-pointer"
+            onClick={() => {
+              setOpenModel(false);
+            }}
+          />
+        </div>
+      </div>
+      <div className="flex flex-row justify-center items-center w-full h-[75vh]">
+        <div className="w-1/2 p-5 h-full">
+          <img
+            src={item.src.large2x}
+            alt={item.alt}
+            className="object-cover w-full h-full rounded-lg shadow-lg-inner shadow-white"
+          />
+        </div>
+        <div className=" flex flex-col justify-center items-center w-1/2 p-5">
+          <div className="flex flex-col justify-start items-start gap-5 m-5 bg-gray-300 p-5 rounded-lg w-full">
+            <h2 className="text-black text-2xl font-bold mb-3">
+              Download Size
+            </h2>
+            <div className="flex justify-center items-center gap-5 ">
+              <input
+                type="radio"
+                name="type"
+                id="small"
+                value={'small'}
+                onChange={(e) => {
+                  setType(e.target.value);
+                }}
+                checked={type === 'small'}
+              />
+              <label htmlFor="small" className="font-semibold text-lg">
+                Small 640 x 960
+              </label>
+            </div>
+            <div className="flex justify-center items-center gap-5 ">
+              <input
+                type="radio"
+                name="type"
+                id="medium"
+                value={'medium'}
+                onChange={(e) => {
+                  setType(e.target.value);
+                }}
+                checked={type === 'medium'}
+              />
+              <label htmlFor="medium" className="font-semibold text-lg">
+                Medium 1920 x 2660
+              </label>
+            </div>
+            <div className="flex justify-center items-center gap-5">
+              <input
+                type="radio"
+                name="type"
+                id="large"
+                value={'large'}
+                onChange={(e) => {
+                  setType(e.target.value);
+                }}
+                checked={type === 'large'}
+              />
+              <label htmlFor="large" className="font-semibold text-lg">
+                Large 2400 x 3600
+              </label>
+            </div>
+            <div className="flex justify-center items-center gap-5">
+              <input
+                type="radio"
+                name="type"
+                id="original"
+                value={'original'}
+                onChange={(e) => {
+                  setType(e.target.value);
+                }}
+                checked={type === 'original'}
+              />
+              <label htmlFor="original" className="font-semibold text-lg">
+                Original
+              </label>
+            </div>
+          </div>
+
+          <button
+            className="bg-green-400 p-3 rounded-lg text-lg font-semibold text-white w-full"
+            onClick={download}>
+            Download
+          </button>
+
+          <div className="flex flex-col justify-start items-start gap-2 mt-3 p-5 rounded-lg w-full">
+            <h2 className="text-black text-2xl font-bold mb-2">Information</h2>
+            <div className="flex justify-start items-start gap-5">
+              <h3 className="text-black text-lg font-semibold ">Title :</h3>
+              <h3 className="text-black text-lg font-semibold ">{item.alt}</h3>
+            </div>
+            <div className="flex justify-start items-start gap-5">
+              <h3 className="text-black text-lg font-semibold">
+                Photographer :
+              </h3>
+              <h3 className="text-black text-lg font-semibold ">
+                {item.photographer}
+              </h3>
+            </div>
+            <div className="flex justify-start items-start gap-5">
+              <h3 className="text-black text-lg font-semibold ">Id :</h3>
+              <h3 className="text-black text-lg font-semibold ">{item.id}</h3>
+            </div>
+            <div className="flex justify-start items-start gap-5">
+              <h3 className="text-black text-lg font-semibold ">Avg Color :</h3>
+              <h3 className="text-black text-lg font-semibold ">
+                {item.avg_color}
+              </h3>
+            </div>
+            <div className="flex justify-start items-start gap-5">
+              <h3 className="text-black text-lg font-semibold ">URL :</h3>
+              <h3 className="text-black text-lg font-semibold ">
+                <a href={item.url}>{item.url}</a>
+              </h3>
+            </div>
+          </div>
+
+          {/* Add other context elements here */}
+        </div>
+      </div>
+    </div>
+  );
+};
